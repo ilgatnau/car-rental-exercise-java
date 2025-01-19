@@ -23,7 +23,7 @@ import io.utils.DatePeriod;
  */
 public class CarRentalTestStory3 {
 
-        @Test
+    @Test
     public void testStory2FindAvailableCarRentedPeriod() {
 
         CarRentalCompany carRentalCompany = CarRentalTestUtils.getCarRentalCompany();

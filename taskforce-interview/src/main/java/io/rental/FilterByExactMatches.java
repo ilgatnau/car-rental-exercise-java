@@ -13,25 +13,26 @@ public class FilterByExactMatches {
     public static boolean matchesCriteria (Car car, Criteria criteria) {
 
         Car carFeaturesCriteria = criteria.getFeatures();
+        if(carFeaturesCriteria != null){
+            if(carFeaturesCriteria.getMake() != null 
+                && car.getMake().indexOf(carFeaturesCriteria.getMake()) < 0){
+                return false;
+            }
 
-        if(carFeaturesCriteria.getMake() != null 
-            && car.getMake().indexOf(carFeaturesCriteria.getMake()) < 0){
-            return false;
-        }
+            if (carFeaturesCriteria.getModel() != null 
+                && car.getModel().indexOf(carFeaturesCriteria.getModel()) < 0){
+                return false;
+            }
 
-        if (carFeaturesCriteria.getModel() != null 
-            && car.getModel().indexOf(carFeaturesCriteria.getModel()) < 0){
-            return false;
-        }
+            if (carFeaturesCriteria.getRegistrationNumber() != null &&
+                !StringUtils.equals(car.getRegistrationNumber(), carFeaturesCriteria.getRegistrationNumber())) {
+                return false;
+            }
 
-        if (carFeaturesCriteria.getRegistrationNumber() != null &&
-            !StringUtils.equals(car.getRegistrationNumber(), carFeaturesCriteria.getRegistrationNumber())) {
-            return false;
-        }
-
-        if (carFeaturesCriteria.getRentalGroup() != null &&
-            !StringUtils.equals(car.getRentalGroup(), carFeaturesCriteria.getRentalGroup())) {
-            return false;
+            if (carFeaturesCriteria.getRentalGroup() != null &&
+                !StringUtils.equals(car.getRentalGroup(), carFeaturesCriteria.getRentalGroup())) {
+                return false;
+            }
         }
 
         if(criteria.getDatePeriod() != null
