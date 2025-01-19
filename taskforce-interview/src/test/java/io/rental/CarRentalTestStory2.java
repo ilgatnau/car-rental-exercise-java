@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import io.utils.DatePeriod;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
