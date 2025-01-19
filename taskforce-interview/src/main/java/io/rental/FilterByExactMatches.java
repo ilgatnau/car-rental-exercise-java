@@ -6,6 +6,7 @@ import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.StringUtils;
 
 import io.utils.DatePeriod;
+import io.utils.DatePeriodUtil;
 
 public class FilterByExactMatches {
 
@@ -30,6 +31,11 @@ public class FilterByExactMatches {
 
         if (carFeaturesCriteria.getRentalGroup() != null &&
             !StringUtils.equals(car.getRentalGroup(), carFeaturesCriteria.getRentalGroup())) {
+            return false;
+        }
+
+        if(criteria.getDatePeriod() != null
+            && car.findOverlappingPeriod(criteria.getDatePeriod())){
             return false;
         }
 

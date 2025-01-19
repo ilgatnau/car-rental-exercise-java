@@ -23,7 +23,7 @@ public class CarRentalTestStory2 {
      *   design criteria: the method should be threadsafe (allowing it to be called from multiple threads)
      */
     @Test
-    public void testStory2FindAvailableCar() {
+    public void testStory2FindAvailableCarEmptyPeriod() {
 
         CarRentalCompany carRentalCompany = CarRentalTestUtils.getCarRentalCompany();
 
@@ -44,6 +44,41 @@ public class CarRentalTestStory2 {
         testStory2.setDatePeriod(datePeriod);
 
         assertThat(carRentalCompany.matchingCars(testStory2).size()).isGreaterThan(0);
+
+    }
+
+    @Test
+    public void testStory2FindAvailableCarRentedPeriod() {
+
+        CarRentalCompany carRentalCompany = CarRentalTestUtils.getCarRentalCompany();
+
+        // Renting car between 25 and 25 Feb
+        carRentalCompany.rentCar(
+            CarRentalTestUtils.CAR1, 
+            CarRentalTestUtils.RENTER1,  
+            new DatePeriod(
+                LocalDate.of(2024, 2, 25), 
+                LocalDate.of(2024, 2, 26))
+        );
+
+        Car carFeatures = new Car(
+            null, 
+            null, 
+            null, 
+            null, 
+            0);
+        
+        DatePeriod datePeriod = 
+            new DatePeriod(
+                LocalDate.of(2024, 2, 23), 
+                LocalDate.of(2024, 2, 27));
+
+        Criteria testStory2 = new Criteria();
+        testStory2.setFeatures(carFeatures);
+        testStory2.setDatePeriod(datePeriod);
+
+        // Only 3 cars available as CAR1 is already booked within the period
+        assertThat(carRentalCompany.matchingCars(testStory2).size()).isEqualTo(3);
 
     }
 }
