@@ -2,33 +2,40 @@ package io.rental;
 
 import java.util.Comparator;
 
+import org.apache.commons.lang.BooleanUtils;
+import org.apache.commons.lang.StringUtils;
+
 import io.utils.DatePeriod;
 
 public class FilterByExactMatches {
 
-    public static synchronized boolean matchesCriteria (Car car, Criteria criteria) {
+    public static boolean matchesCriteria (Car car, Criteria criteria) {
 
-        return false;
-    }
+        Car carFeaturesCriteria = criteria.getFeatures();
 
-    private class CarMakeComparator implements Comparator<Car> {
-
-        @Override
-        public int compare(Car arg0, Car arg1) {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'compare'");
+        if(carFeaturesCriteria.getMake() != null 
+            && car.getMake().indexOf(carFeaturesCriteria.getMake()) < 0){
+            return false;
         }
-        
-    }
 
-    private class DatePeriodComparator implements Comparator<DatePeriod> {
-
-        @Override
-        public int compare(DatePeriod arg0, DatePeriod arg1) {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'compare'");
+        if (carFeaturesCriteria.getModel() != null 
+            && car.getModel().indexOf(carFeaturesCriteria.getModel()) < 0){
+            return false;
         }
-        
+
+        if (carFeaturesCriteria.getRegistrationNumber() != null &&
+            !StringUtils.equals(car.getRegistrationNumber(), carFeaturesCriteria.getRegistrationNumber())) {
+            return false;
+        }
+
+        if (carFeaturesCriteria.getRentalGroup() != null &&
+            !StringUtils.equals(car.getRentalGroup(), carFeaturesCriteria.getRentalGroup())) {
+            return false;
+        }
+
+        return true;
     }
+
+
     
 }
